@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from "./components/layout/NavBar";
+import Dashboard from "./components/dashboard/Dashboard";
+import ChallengeDetails from "./components/challenges/ChallengeDetails";
+import Login from "./components/auth/Login";
+import CreateChallenge from "./components/challenges/CreateChallenge";
+import ChallengeContextProvider from "./contexts/ChallengeContextProvider";
+import UserContextProvider from "./contexts/UserContextProvider";
+import MyChallenges from "./components/challenges/MyChallenges";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <ChallengeContextProvider>
+          <UserContextProvider>
+            <NavBar />
+            <Routes>
+              <Route path="/" element={<Dashboard />} index />
+              <Route path="/challenge/:id" element={<ChallengeDetails />} />
+              <Route path="/create" element={<CreateChallenge />} />
+              <Route path="/myChallenges" element={<MyChallenges />} />
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </UserContextProvider>
+        </ChallengeContextProvider>
+      </div>
+    </BrowserRouter>
   );
 }
 
